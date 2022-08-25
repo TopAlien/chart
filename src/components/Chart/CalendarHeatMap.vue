@@ -27,7 +27,7 @@ export default {
             ['L', points[3].x, points[3].y],
             ['Z']
           ]
-          // @ts-ignore
+
           attrs.path = this.parsePath(path)
           group.addShape('path', {
             attrs
@@ -69,10 +69,11 @@ export default {
           const heatmapPlot = new Heatmap(document.getElementById('calendarHeadMap'), {
             data,
             height: 170,
-            autoFit: false,
+            autoFit: true,
             xField: 'week',
             yField: 'day',
             colorField: 'commits',
+            useDeferredLabel: true,
             reflect: 'y',
             shape: 'boundary-polygon',
             meta: {
@@ -116,9 +117,9 @@ export default {
                     return '6月'
                   } else if (val === '10') {
                     return '7月'
-                  } else if (val === '15') {
+                  } else if (val === '14') {
                     return '8月'
-                  } else if (val === '19') {
+                  } else if (val === '20') {
                     return '9月'
                   } else if (val === '24') {
                     return '10月'

@@ -18,7 +18,9 @@ export default {
             data,
             xField: 'item',
             yField: 'score',
+            autoFit: true,
             seriesField: 'user',
+            useDeferredLabel: true,
             smooth: true,
             meta: {
               score: {
@@ -29,19 +31,18 @@ export default {
             },
             lineStyle: {
               lineWidth: 2,
-              cursor: 'pointer'
+              cursor: 'pointer',
             },
             xAxis: {
               line: null,
               tickLine: null,
-              top: true,
+              // top: true,
               grid: {
                 line: {
                   style: {
-                    stroke: 'white',
+                    stroke: 'red',
                     lineWidth: 3,
-                    lineDash: null,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }
                 }
               }
@@ -52,19 +53,15 @@ export default {
               tickCount: 2,
               label: false,
               grid: {
-                closed: true,
                 line: {
                   style: {
-                    stroke: 'rgb(220,227,246)',
+                    stroke: 'rgba(220,227,246,.4)',
                     cursor: 'pointer',
                   }
                 },
-                alternateColor: ['rgb(220,227,246)']
+                alternateColor: ['rgba(220,227,246,.4)']
               }
             },
-            point: {
-              size: 2
-            }
           })
           radarPlot.render()
         })
