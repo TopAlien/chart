@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <G2RadarBase></G2RadarBase>
+    <CalendarGithub></CalendarGithub>
     <CalendarHeatMap></CalendarHeatMap>
     <Radar></Radar>
     <PathLine></PathLine>
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+import CalendarGithub from './components/Chart/CalendarGithub'
 import G2RadarBase from './components/Chart/G2RadarBase'
 import CalendarHeatMap from './components/Chart/CalendarHeatMap'
 import PathLine from './components/Chart/PathLine'
@@ -15,6 +17,7 @@ import Radar from './components/Chart/Radar'
 export default {
   name: 'App',
   components: {
+    CalendarGithub,
     G2RadarBase,
     CalendarHeatMap,
     PathLine,
