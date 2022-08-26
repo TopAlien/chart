@@ -4,7 +4,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 dayjs.extend(weekOfYear);
 
 function mapDayToMonth(month) {
-  const dayOfMonth = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+  const dayOfMonth = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   return dayOfMonth[month];
 }
 
@@ -18,11 +18,11 @@ function mapDayToWeek(day) {
 export function getCalendarData(values, lastYear, dateFormat = 'YYYY-MM-DD') {
   const cYear = String((+lastYear || dayjs().year()) + 1);
   const endDate = dayjs(cYear);
-  
+
   const startDate = endDate.subtract(1, 'year');
 
   const result = [];
-  for (let date = startDate; !date.isAfter(endDate - 1); ) {
+  for (let date = startDate; !date.isAfter(endDate - 1);) {
     result.push({
       x: `${date.week() === 1 && date.month() === 11 ? date.year() + 1 : date.year()}-${date.week()}`,
       year: `${date.year()}`,
@@ -34,7 +34,7 @@ export function getCalendarData(values, lastYear, dateFormat = 'YYYY-MM-DD') {
     });
     date = date.add(1, 'day');
   }
-  
+
   return result.map((d) => ({ ...d, date: d.date.format(dateFormat), day: mapDayToWeek(d.day) }));
 }
 
