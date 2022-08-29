@@ -1,7 +1,7 @@
-import { DAY_OF_WEEK, getCalendarData, getFirstDateOfMonthByWeek } from './utils';
+import { DAY_OF_WEEK, getCalendarData, getFirstDateOfMonthByWeek, rangeColor } from './utils'
 
 export const defaultOptions = {
-  color: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+  color: (value) => rangeColor(value),
   tooltip: {
     shared: true,
     showMarkers: false,
@@ -12,50 +12,51 @@ export const defaultOptions = {
       'g2-tooltip': {
         margin: 0,
         padding: '2px 4px',
-        fontSize: '10px',
+        fontSize: '10px'
       },
       'g2-tooltip-list-item': {
-        margin: '6px 0',
+        margin: '6px 0'
       },
       'g2-tooltip-title': {
-        margin: '4px 0 0',
-      },
-    },
+        margin: '4px 0 0'
+      }
+    }
   },
   style: () => {
     return {
       radius: 4,
       stroke: '#fff',
-      lineWidth: 4,
-    };
-  },
-};
+      lineWidth: 4
+    }
+  }
+}
 
-export function adaptor(params){
-  const { chart, options } = params;
-  
-  const { data, color, tooltip, style, queryYear } = options;
+export function adaptor(params) {
+  const { chart, options } = params
 
-  const calendarData = getCalendarData(data, queryYear);
+  const { data, color, tooltip, style, queryYear } = options
 
-  chart.data(calendarData).scale('day', { values: DAY_OF_WEEK });
+  const calendarData = getCalendarData(data, queryYear)
 
-  const geometry = chart.polygon().position('x*day');
+  chart.data(calendarData).scale('day', { values: DAY_OF_WEEK })
 
-  geometry.color('value', color);
+  const geometry = chart.polygon().position('x*day')
+
+  geometry.color('value', color)
 
   if (typeof style === 'function') {
-    geometry.style('value*month*week*day', (value, month, week, day) => style({ value, month, week, day }));
+    geometry.style('value*month*week*day', (value, month, week, day) => style({ value, month, week, day }))
   } else if (style) {
-    geometry.style(style);
+    geometry.style(style)
   }
 
-  geometry.shape('', () => ['square', 1, 1]);
+  geometry.shape('', () => ['square', 1, 1])
 
-  chart.coordinate().reflect('y');
+  chart.coordinate().reflect('y')
 
-  chart.legend(false);
-  chart.tooltip(tooltip);
+  chart.legend(false)
+
+  chart.tooltip(tooltip)
   chart.axis('x', {
     line: null,
     grid: null,
@@ -63,13 +64,13 @@ export function adaptor(params){
     subTickLine: null,
     label: {
       autoHide: false,
-      // textm, item
-      formatter: (text) => {
-        return getFirstDateOfMonthByWeek(Number(text.slice(5)));
-      },
-    },
-  });
-  chart.axis('day', { line: null, grid: null });
+      // text, item
+      formatter: text => {
+        return getFirstDateOfMonthByWeek(Number(text.slice(5)))
+      }
+    }
+  })
+  chart.axis('day', { line: null, grid: null })
 
-  return params;
+  return params
 }

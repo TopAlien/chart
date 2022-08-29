@@ -47,3 +47,35 @@ export function getFirstDateOfMonthByWeek(week) {
   const date = dayjs().week(week);
   return date.date() > 7 ? '' : mapDayToMonth(date.month());
 }
+
+/** 
+ * 色块范围着色
+ * @param value
+ * 0: #ebedf0
+ * 
+ * 1-10 #9be9a8
+ * 
+ * 11-20 #40c463
+ * 
+ * 21-30 #30a14e
+ * 
+ * 30+ #216e39
+ * 
+ * ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39']
+ */
+export const rangeColor = (value) => {
+  if (!value) return '#ebedf0';
+
+  if (0 < +value && +value <= 10) {
+    return '#9be9a8';
+  }
+
+  if (10 < +value && +value <= 20) {
+    return '#40c463';
+  }
+
+  if (20 < +value && +value <= 30) {
+    return '#30a14e';
+  }
+  return '#216e39'
+}
