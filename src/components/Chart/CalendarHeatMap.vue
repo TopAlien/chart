@@ -130,6 +130,10 @@ export default {
             }
           })
           heatmapPlot.render()
+
+          this.$once('hook:destroyed', () => {
+            heatmapPlot?.destroy()
+          })
         })
     }
   }

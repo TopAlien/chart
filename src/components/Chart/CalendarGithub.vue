@@ -75,6 +75,10 @@ export default {
       )
 
       this.plot?.render()
+
+      this.$once('hook:destroyed', () => {
+        this.plot?.destroy()
+      })
     },
     handleDate(date) {
       if (date === this.queryYear) return

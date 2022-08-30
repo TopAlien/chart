@@ -71,7 +71,11 @@ export default {
           }
         }
       })
-      radarPlot.render()
+      radarPlot?.render()
+      
+      this.$once('hook:destroyed', () => {
+        radarPlot?.destroy()
+      })
     }
   }
 }

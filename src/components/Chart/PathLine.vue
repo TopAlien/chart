@@ -85,6 +85,10 @@ export default {
         myChart.resize()
       }
       option && myChart.setOption(option)
+
+      this.$once('hook:destroyed', () => {
+        myChart?.destroy()
+      })
     }
   }
 }

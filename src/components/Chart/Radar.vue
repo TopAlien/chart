@@ -31,7 +31,7 @@ export default {
             },
             lineStyle: {
               lineWidth: 2,
-              cursor: 'pointer',
+              cursor: 'pointer'
             },
             xAxis: {
               line: null,
@@ -42,7 +42,7 @@ export default {
                   style: {
                     stroke: 'red',
                     lineWidth: 3,
-                    cursor: 'pointer',
+                    cursor: 'pointer'
                   }
                 }
               }
@@ -56,14 +56,18 @@ export default {
                 line: {
                   style: {
                     stroke: 'rgba(220,227,246,.4)',
-                    cursor: 'pointer',
+                    cursor: 'pointer'
                   }
                 },
                 alternateColor: ['rgba(220,227,246,.4)']
               }
-            },
+            }
           })
-          radarPlot.render()
+          radarPlot?.render()
+
+          this.$once('hook:destroyed', () => {
+            radarPlot?.destroy()
+          })
         })
     }
   }
