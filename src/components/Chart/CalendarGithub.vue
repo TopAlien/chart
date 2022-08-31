@@ -4,13 +4,13 @@
       <div style="flex: 1">
         <div id='containerGithub'></div>
       </div>
-      <div style="width: 80px;">
-        <div
+      <div>
+        <!-- <div
           v-for="item in date"
           :key="item"
           @click="handleDate(item)"
           class="date_item"
-        >{{ item }}</div>
+        >{{ item }}</div> -->
       </div>
     </div>
     <div class="legend">

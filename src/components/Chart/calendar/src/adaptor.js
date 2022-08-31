@@ -22,6 +22,7 @@ export const defaultOptions = {
       }
     }
   },
+  // TODO 移动端渐小 2 0
   style: () => {
     return {
       radius: 4,

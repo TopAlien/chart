@@ -87,7 +87,7 @@ export default {
       option && myChart.setOption(option)
 
       this.$once('hook:destroyed', () => {
-        myChart?.destroy()
+        myChart.dispose()
       })
     }
   }
