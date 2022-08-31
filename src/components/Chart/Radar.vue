@@ -41,6 +41,9 @@ export default {
               cursor: 'pointer',
               lineDash: [2, 5]
             },
+            point: {
+              size: 2,
+            },
             xAxis: {
               line: null,
               tickLine: null,
