@@ -1,3 +1,10 @@
+<!--
+ * @Author       : bo.wang
+ * @Date         : 2022-08-31 19:50:24
+ * @LastEditors  : bo.wang
+ * @LastEditTime : 2022-08-31 22:27:09
+ * @Description  : 请填写简介
+-->
 <template>
   <div id="container" />
 </template>
@@ -30,8 +37,9 @@ export default {
               }
             },
             lineStyle: {
-              lineWidth: 2,
-              cursor: 'pointer'
+              lineWidth: 1.5,
+              cursor: 'pointer',
+              lineDash: [2, 5]
             },
             xAxis: {
               line: null,
@@ -40,7 +48,7 @@ export default {
               grid: {
                 line: {
                   style: {
-                    stroke: 'red',
+                    stroke: '#E3E4E6',
                     lineWidth: 3,
                     cursor: 'pointer'
                   }

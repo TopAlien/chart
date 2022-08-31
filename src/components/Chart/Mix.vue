@@ -1,3 +1,10 @@
+<!--
+ * @Author       : bo.wang
+ * @Date         : 2022-08-31 19:50:24
+ * @LastEditors  : bo.wang
+ * @LastEditTime : 2022-08-31 22:12:53
+ * @Description  : 请填写简介
+-->
 <template>
   <div id="cmix">
   </div>
@@ -25,14 +32,14 @@ export default {
                   data: data.line,
                   xField: 'time',
                   yField: 'value',
-                  interactions: [{ type: 'element-highlight-by-color' }],
+                  interactions: [{type: 'association-highlight'},],
                   seriesField: 'area',
                   line: {},
                   point: { style: { r: 2.5 } },
                   meta: {
                     time: { range: [0, 1] }
                   },
-                  smooth: true,
+                  // smooth: true,
                   slider: {},
                   tooltip: {
                     showCrosshairs: true,
