@@ -13,7 +13,8 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.11.5",
     "echarts": "^5.3.3",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-calendar-heatmap": "^0.8.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.13",

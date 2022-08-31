@@ -5,12 +5,12 @@
         <div id='containerGithub'></div>
       </div>
       <div>
-        <!-- <div
+        <div
           v-for="item in date"
           :key="item"
           @click="handleDate(item)"
           class="date_item"
-        >{{ item }}</div> -->
+        >{{ item }}</div>
       </div>
     </div>
     <div class="legend">
@@ -65,9 +65,9 @@ export default {
       this.plot = new P(
         'containerGithub',
         {
-          autoFit: true,
           useDeferredLabel: true,
           height: 150,
+          autoFit: true,
           data
         },
         adaptor,

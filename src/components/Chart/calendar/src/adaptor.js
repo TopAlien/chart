@@ -1,6 +1,7 @@
 import { DAY_OF_WEEK, getCalendarData, getFirstDateOfMonthByWeek, rangeColor } from './utils'
 
 export const defaultOptions = {
+  autoFit: true,
   color: (value) => rangeColor(value),
   tooltip: {
     shared: true,
@@ -22,7 +23,6 @@ export const defaultOptions = {
       }
     }
   },
-  // TODO 移动端渐小 2 0
   style: () => {
     return {
       radius: 4,
@@ -51,6 +51,7 @@ export function adaptor(params) {
     geometry.style(style)
   }
 
+  /// 移动端
   geometry.shape('', () => ['square', 1, 1])
 
   chart.coordinate().reflect('y')
