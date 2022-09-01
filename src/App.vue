@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <CalendarCus></CalendarCus>
     <G2RadarBase></G2RadarBase>
     <AssMix></AssMix>
     <CalendarGithub></CalendarGithub>
@@ -13,7 +12,6 @@
 </template>
 
 <script>
-import CalendarCus from './components/Chart/calendarCus'
 import AssMix from './components/Chart/assMix'
 import Mix from './components/Chart/Mix'
 import MLine from './components/Chart/MLine'
@@ -25,7 +23,6 @@ import Radar from './components/Chart/Radar'
 export default {
   name: 'App',
   components: {
-    CalendarCus,
     AssMix,
     Mix,
     MLine,

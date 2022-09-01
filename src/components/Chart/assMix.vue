@@ -5,8 +5,14 @@
 
 <script>
 import { Mix } from '@antv/g2plot'
+import { last } from '@antv/util'
 
 export default {
+  data() {
+    return {
+      plot: null
+    }
+  },
   mounted() {
     this.init()
   },
@@ -17,6 +23,7 @@ export default {
         .then(data => {
           const plot = new Mix('assMix', {
             tooltip: false,
+            height: 500,
             plots: [
               {
                 type: 'pie',
@@ -85,23 +92,25 @@ export default {
           })
 
           plot.render()
+          this.plot = plot
 
-          // 如果左轴是折线
-          // const x = plot.chart.views[0].getElements()[1].shape.getBBox().maxX
-          // console.log(plot.chart.views[1])
-          // console.log(x)
-          // plot.chart.showTooltip({ x, y: 0 })
-
-          // 如果右轴是折线
-          // const x = dualAxes.chart.views[1].getElements()[0].shape.getBBox().maxX;
-          // dualAxes.chart.showTooltip({ x, y: 0 });
-
-          // 如果左轴是柱状图
-          // const elements = dualAxes.chart.views[0].getElements();
-          // const lastBox = elements[elements.length - 1].shape.getBBox();
-          // const x = lastBox.x+lastBox.width/2;
-          // dualAxes.chart.showTooltip({ x, y: 0 });
+          this.initPointTooltip()
         })
+    },
+    initPointTooltip() {
+      const plot = this.plot
+      plot?.update({
+        tooltip: {
+          showCrosshairs: false,
+          shared: false
+        }
+      })
+      const chartLine = plot?.chart.views[1]
+      const data = chartLine.filteredData || []
+      const point = chartLine.getXY(last(data.filter(d => d.value === 281985)))
+      plot.chart.unlockTooltip()
+      plot.chart.showTooltip(point)
+      plot.chart.lockTooltip()
     }
   }
 }
