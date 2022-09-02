@@ -4,7 +4,7 @@
 
 <script>
 import { Mix } from '@antv/g2plot'
-import { last } from '@antv/util'
+import { debounce, last } from '@antv/util'
 
 export default {
   data() {
@@ -24,7 +24,7 @@ export default {
             tooltip: false,
             height: 500,
             legend: {
-              position: 'top'
+              position: 'bottom'
             },
             autoFit: true,
             plots: [
@@ -74,13 +74,12 @@ export default {
                   interactions: [
                     { type: 'element-active' },
                     {
-                      type: 'association-highlight',
+                      type: 'element-selected',
                       cfg: {
-                        processing: true,
                         start: [
                           {
                             trigger: 'element:click',
-                            action: 'association:highlight',
+                            action: ['association:reset', 'association:highlight'],
                             arg: { linkField: 'area' }
                           }
                         ],
@@ -89,15 +88,34 @@ export default {
                             trigger: 'element:dblclick',
                             action: 'association:reset',
                             arg: { linkField: 'area' }
-                          },
-                          {
-                            trigger: 'element:click',
-                            action: ['association:reset', 'association:highlight'],
-                            arg: { linkField: 'area' }
                           }
                         ]
                       }
                     }
+                    // {
+                    //   type: 'association-highlight',
+                    //   cfg: {
+                    //     start: [
+                    //       {
+                    //         trigger: 'element:click',
+                    //         action: 'association:highlight',
+                    //         arg: { linkField: 'area' }
+                    //       }
+                    //     ],
+                    //     end: [
+                    //       {
+                    //         trigger: 'element:dblclick',
+                    //         action: 'association:reset',
+                    //         arg: { linkField: 'area' }
+                    //       },
+                    //       {
+                    //         trigger: 'element:click',
+                    //         action: ['association:reset', 'association:highlight'],
+                    //         arg: { linkField: 'area' }
+                    //       }
+                    //     ]
+                    //   }
+                    // }
                   ]
                 }
               },
@@ -152,18 +170,24 @@ export default {
       })
       const chartLine = plotChart?.views[1]
       const data = chartLine.filteredData || []
-      const point = chartLine.getXY(last(data.filter(d => d.value === 281985)))
-      plotChart.unlockTooltip()
 
-      window.onresize = function () {
-        console.log('asd')
+      this.drawTip2(data, chartLine, plotChart)
+
+      plotChart.on('slider:mousemove', () => {
+        this.drawTip2(data, chartLine, plotChart)
+      })
+      window.onresize = () => {
+        this.drawTip2(data, chartLine, plotChart)
       }
+    },
+    drawTip2(data, chartLine, plotChart, value = 281985) {
+      const point = chartLine.getXY(last(data.filter(d => d.value === value)))
       if (plotChart.isPointInPlot(point)) {
         plotChart.showTooltip(point)
-        plotChart.lockTooltip()
       } else {
         plotChart.hideTooltip()
       }
+      plotChart.lockTooltip()
     }
   }
 }
