@@ -7,13 +7,11 @@
     <Radar></Radar>
     <MLine></MLine>
     <PathLine></PathLine>
-    <Mix></Mix>
   </div>
 </template>
 
 <script>
 import AssMix from './components/Chart/assMix'
-import Mix from './components/Chart/Mix'
 import MLine from './components/Chart/MLine'
 import CalendarGithub from './components/Chart/CalendarGithub'
 import G2RadarBase from './components/Chart/G2RadarBase'
@@ -24,7 +22,6 @@ export default {
   name: 'App',
   components: {
     AssMix,
-    Mix,
     MLine,
     CalendarGithub,
     G2RadarBase,

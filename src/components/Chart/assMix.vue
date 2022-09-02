@@ -1,6 +1,5 @@
 <template>
-  <div id="assMix">
-  </div>
+  <div id="assMix"></div>
 </template>
 
 <script>
@@ -24,40 +23,76 @@ export default {
           const plot = new Mix('assMix', {
             tooltip: false,
             height: 500,
+            legend: {
+              position: 'top'
+            },
+            autoFit: true,
             plots: [
               {
                 type: 'pie',
-                region: { start: { x: 0.5, y: 0 }, end: { x: 1, y: 0.45 } },
+                region: { start: { x: 0.5, y: 0.5 }, end: { x: 1.2, y: 0.25 } },
                 options: {
-                  data: data.pie,
+                  data: [
+                    {
+                      area: '华东',
+                      bill: 1
+                    },
+                    {
+                      area: '中南',
+                      bill: 1
+                    },
+                    {
+                      area: '东北',
+                      bill: 1
+                    },
+                    {
+                      area: '华北',
+                      bill: 1
+                    },
+                    {
+                      area: '西南',
+                      bill: 1
+                    },
+                    {
+                      area: '西北',
+                      bill: 1
+                    }
+                  ],
                   angleField: 'bill',
                   colorField: 'area',
-                  tooltip: {
-                    showMarkers: false
+                  tooltip: null,
+                  statistic: null,
+                  radius: 1,
+                  innerRadius: 0.84,
+                  state: {
+                    active: {
+                      style: {
+                        lineWidth: 0
+                      }
+                    }
                   },
-                  radius: 0.85,
-                  label: { type: 'inner', formatter: '{name}', offset: '-15%' },
                   interactions: [
                     { type: 'element-active' },
                     {
-                      type: 'association-tooltip',
-                      cfg: {
-                        start: [
-                          {
-                            trigger: 'element:mousemove',
-                            action: 'association:showTooltip',
-                            arg: { dim: 'x', linkField: 'area' }
-                          }
-                        ]
-                      }
-                    },
-                    {
                       type: 'association-highlight',
                       cfg: {
+                        processing: true,
                         start: [
                           {
-                            trigger: 'element:mousemove',
+                            trigger: 'element:click',
                             action: 'association:highlight',
+                            arg: { linkField: 'area' }
+                          }
+                        ],
+                        end: [
+                          {
+                            trigger: 'element:dblclick',
+                            action: 'association:reset',
+                            arg: { linkField: 'area' }
+                          },
+                          {
+                            trigger: 'element:click',
+                            action: ['association:reset', 'association:highlight'],
                             arg: { linkField: 'area' }
                           }
                         ]
@@ -92,25 +127,43 @@ export default {
           })
 
           plot.render()
+
           this.plot = plot
 
           this.initPointTooltip()
+
+          // plot.setState(
+          //   'active',
+          //   data => {
+          //     console.log(data)
+          //     return data.area === '华东'
+          //   },
+          //   true
+          // )
         })
     },
     initPointTooltip() {
-      const plot = this.plot
-      plot?.update({
+      const plotChart = this.plot?.chart
+      this.plot?.update({
         tooltip: {
           showCrosshairs: false,
           shared: false
         }
       })
-      const chartLine = plot?.chart.views[1]
+      const chartLine = plotChart?.views[1]
       const data = chartLine.filteredData || []
       const point = chartLine.getXY(last(data.filter(d => d.value === 281985)))
-      plot.chart.unlockTooltip()
-      plot.chart.showTooltip(point)
-      plot.chart.lockTooltip()
+      plotChart.unlockTooltip()
+
+      window.onresize = function () {
+        console.log('asd')
+      }
+      if (plotChart.isPointInPlot(point)) {
+        plotChart.showTooltip(point)
+        plotChart.lockTooltip()
+      } else {
+        plotChart.hideTooltip()
+      }
     }
   }
 }

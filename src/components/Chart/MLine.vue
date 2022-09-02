@@ -1,52 +1,86 @@
 <template>
-  <div id="containerMLine"></div>
+  <div id="assMix1"></div>
 </template>
 
 <script>
-import { Line } from '@antv/g2plot'
+import { Mix } from '@antv/g2plot'
+import { last } from '@antv/util'
 
 export default {
+  data() {
+    return {
+      plot: null
+    }
+  },
   mounted() {
     this.init()
   },
   methods: {
     init() {
-      fetch('https://gw.alipayobjects.com/os/bmw-prod/e00d52f4-2fa6-47ee-a0d7-105dd95bde20.json')
-        .then(res => res.json())
+      fetch('https://gw.alipayobjects.com/os/antfincdn/HkxWvFrZuC/association-data.json')
+        .then(data => data.json())
         .then(data => {
-          const linePlot = new Line('containerMLine', {
-            data,
-            xField: 'year',
+          const plot = new Mix('assMix1', {
+            tooltip: false,
             autoFit: true,
-            yField: 'gdp',
-            seriesField: 'name',
-            useDeferredLabel: 1000,
-            // interactions: [{ type: 'element-highlight-by-color' }],
-            yAxis: {
-              label: {
-                formatter: v => `${(v / 10e8).toFixed(1)} B`
-              }
-            },
-            tooltip: {
-              follow: true,
-              enterable: true,
-              offset: 18,
-              shared: true,
-              marker: { lineWidth: 0.5, r: 3 }
-            },
             legend: {
               position: 'top'
             },
-            smooth: true,
-            point: {
-              size: 2
-            },
-            slider: {}
+            plots: [
+              {
+                type: 'line',
+                options: {
+                  data: data.line,
+                  xField: 'time',
+                  yField: 'value',
+                  seriesField: 'area',
+                  interactions: [{ type: 'element-highlight-by-color' }],
+                  line: {},
+                  point: { },
+                  meta: {
+                    time: { range: [0, 1] }
+                  },
+                  legend: {},
+                  smooth: true,
+                  slider: {},
+                  tooltip: {
+                    showCrosshairs: true,
+                    shared: true
+                  }
+                }
+              }
+            ]
           })
-          linePlot.render()
 
-          linePlot.setState('active', data => data.gdp === 4594306848763.08 && data.name === 'China', true)
+          plot.render()
+
+          this.plot = plot
+
+          this.initPointTooltip()
         })
+    },
+    initPointTooltip() {
+      const plotChart = this.plot?.chart
+      this.plot?.update({
+        tooltip: {
+          showCrosshairs: false,
+          shared: false
+        }
+      })
+      const chartLine = plotChart?.views[0]
+      const data = chartLine.filteredData || []
+      const point = chartLine.getXY(last(data.filter(d => d.value === 281985)))
+      plotChart.unlockTooltip()
+
+      window.onresize = function () {
+        console.log('asd')
+      }
+      if (plotChart.isPointInPlot(point)) {
+        plotChart.showTooltip(point)
+        plotChart.lockTooltip()
+      } else {
+        plotChart.hideTooltip()
+      }
     }
   }
 }
