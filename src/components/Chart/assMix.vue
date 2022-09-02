@@ -4,7 +4,7 @@
 
 <script>
 import { Mix } from '@antv/g2plot'
-import { debounce, last } from '@antv/util'
+import { last } from '@antv/util'
 
 export default {
   data() {
